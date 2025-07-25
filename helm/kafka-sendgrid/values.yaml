@@ -80,6 +80,7 @@ config:
 # Secrets
 secrets:
   sendgridApiKey: ""  # Should be set during deployment
+  sendgridFromEmail: ""  # Should be set during deployment
 
 # Health checks
 livenessProbe:

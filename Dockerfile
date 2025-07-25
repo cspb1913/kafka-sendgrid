@@ -1,5 +1,5 @@
 # Build stage
-FROM gradle:8.11.1-jdk17-alpine AS build
+FROM gradle:8.11.1-jdk21-alpine AS build
 
 # Set working directory
 WORKDIR /app
@@ -16,8 +16,8 @@ COPY src ./src
 # Build the application
 RUN ./gradlew build --no-daemon -x test
 
-# Runtime stage - using Java 17 Alpine 3.21
-FROM eclipse-temurin:17-jre-alpine
+# Runtime stage - using Java 21 Alpine 3.21
+FROM eclipse-temurin:21-jre-alpine
 
 # Install dumb-init for proper signal handling
 RUN apk add --no-cache dumb-init

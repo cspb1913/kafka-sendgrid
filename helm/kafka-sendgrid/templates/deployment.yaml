@@ -55,10 +55,13 @@ spec:
             - name: SENDGRID_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kafka-sendgrid.fullname" . }}-secret
+                  name: sendgrid
                   key: sendgrid-api-key
             - name: SENDGRID_FROM_EMAIL
-              value: {{ .Values.config.sendgrid.fromEmail | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: sendgrid
+                  key: sendgrid-from-email
           volumeMounts:
             - name: tmp
               mountPath: /tmp

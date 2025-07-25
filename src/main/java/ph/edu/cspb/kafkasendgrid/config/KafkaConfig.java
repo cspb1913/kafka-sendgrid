@@ -1,4 +1,4 @@
-package com.cspb1913.kafkasendgrid.config;
+package ph.edu.cspb.kafkasendgrid.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;

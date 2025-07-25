@@ -1,4 +1,4 @@
-package com.cspb1913.kafkasendgrid.model;
+package ph.edu.cspb.kafkasendgrid.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.testng.annotations.BeforeMethod;

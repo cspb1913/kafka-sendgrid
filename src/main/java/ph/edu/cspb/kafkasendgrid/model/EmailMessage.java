@@ -1,4 +1,4 @@
-package com.cspb1913.kafkasendgrid.model;
+package ph.edu.cspb.kafkasendgrid.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -17,7 +17,7 @@ sendgrid:
 
 logging:
   level:
-    com.cspb1913.kafkasendgrid: INFO
+    ph.edu.cspb.kafkasendgrid: INFO
     org.springframework.kafka: WARN
     org.apache.kafka: WARN
   pattern:

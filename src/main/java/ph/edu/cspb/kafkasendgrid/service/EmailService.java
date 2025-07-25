@@ -1,6 +1,6 @@
-package com.cspb1913.kafkasendgrid.service;
+package ph.edu.cspb.kafkasendgrid.service;
 
-import com.cspb1913.kafkasendgrid.model.EmailMessage;
+import ph.edu.cspb.kafkasendgrid.model.EmailMessage;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;

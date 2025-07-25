@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.cspb1913.kafkasendgrid.model.EmailMessageTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2025-07-25T14:55:00" hostname="pkrvmpptgkbjq6m" time="0.277">
+  <properties/>
+  <testcase name="testEmailMessageCreation" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.006"/>
+  <testcase name="testEmailMessageDefaultConstructor" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.0"/>
+  <testcase name="testEmailMessageEqualsAndHashCode" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.0"/>
+  <testcase name="testEmailMessageJSONDeserializationWithMissingFields" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.093"/>
+  <testcase name="testEmailMessageJSONSerialization" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.025"/>
+  <testcase name="testEmailMessageToString" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.003"/>
+  <testcase name="testEmailMessageValidation" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.079"/>
+  <testcase name="testEmailMessageValidationBlankFields" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.011"/>
+  <testcase name="testEmailMessageValidationInvalidEmail" classname="com.cspb1913.kafkasendgrid.model.EmailMessageTest" time="0.006"/>
+  <system-out><![CDATA[14:55:00.215 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.2.Final
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -30,7 +30,7 @@ RUN addgroup -g 1001 -S appgroup && \
 WORKDIR /app
 
 # Copy the built JAR from build stage
-COPY --from=build /app/build/libs/kafka-sendgrid-*.jar app.jar
+COPY --from=build /app/build/libs/kafka-sendgrid.jar app.jar
 
 # Change ownership of the app directory
 RUN chown -R appuser:appgroup /app

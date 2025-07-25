@@ -1,4 +1,4 @@
-package com.cspb1913.kafkasendgrid.config;
+package ph.edu.cspb.kafkasendgrid.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;

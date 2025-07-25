@@ -5,7 +5,7 @@ plugins {
     id 'jacoco'
 }
 
-group = 'com.cspb1913'
+group = 'ph.edu.cspb'
 version = project.findProperty('version') ?: '1.0.0'
 
 java {
@@ -128,5 +128,5 @@ jar {
 bootJar {
     enabled = true
     archiveClassifier = ''
-    mainClass = 'com.cspb1913.kafkasendgrid.KafkaSendgridApplication'
+    mainClass = 'ph.edu.cspb.kafkasendgrid.KafkaSendgridApplication'
 }

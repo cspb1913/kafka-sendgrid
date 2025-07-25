@@ -1,4 +1,4 @@
-package com.cspb1913.kafkasendgrid;
+package ph.edu.cspb.kafkasendgrid;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

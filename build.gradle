@@ -1,0 +1,131 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco'
+}
+
+group = 'com.cspb1913'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Boot starters
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // Kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    
+    // SendGrid
+    implementation 'com.sendgrid:sendgrid-java:4.10.2'
+    
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    
+    // Jackson for JSON processing
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    
+    // Test dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation 'org.testng:testng:7.10.2'
+    
+    // Exclude JUnit and use TestNG
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.jupiter'
+        exclude group: 'org.junit.vintage'
+    }
+    
+    // Test Lombok
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+}
+
+// Configure TestNG instead of JUnit
+test {
+    useTestNG()
+    systemProperty 'file.encoding', 'UTF-8'
+    
+    // TestNG configuration
+    options {
+        useDefaultListeners = true
+        outputDirectory = file("$buildDir/reports/tests")
+    }
+    
+    // Fail build if test coverage is below threshold
+    finalizedBy jacocoTestReport
+}
+
+// Jacoco configuration
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+    
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                '**/KafkaSendgridApplication*',
+                '**/config/**',
+                '**/model/**'
+            ])
+        }))
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.80
+            }
+        }
+    }
+}
+
+// Custom gradle tasks
+task testCoverage {
+    dependsOn test, jacocoTestReport, jacocoTestCoverageVerification
+    description = 'Run tests and generate coverage report with verification'
+}
+
+// Ensure tests run before coverage verification
+check.dependsOn jacocoTestCoverageVerification
+
+// Bootjar configuration
+jar {
+    enabled = false
+    archiveClassifier = ''
+}
+
+bootJar {
+    enabled = true
+    archiveClassifier = ''
+    mainClass = 'com.cspb1913.kafkasendgrid.KafkaSendgridApplication'
+}

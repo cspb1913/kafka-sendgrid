@@ -68,10 +68,10 @@ affinity: {}
 # Application configuration
 config:
   kafka:
-    bootstrapServers: "kafka-cluster:9092"
-    consumerGroupId: "kafka-sendgrid-group"
+    bootstrapServers: "kafka-external.kafka.svc.cluster.local:9092"
+    consumerGroupId: "form137-sendgrid-consumer"
     autoOffsetReset: "earliest"
-    topicName: "sendgrid-topic"
+    topicName: "form137-email-notifications"
   
   sendgrid:
     apiKey: ""  # Should be provided via secret

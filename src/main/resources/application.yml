@@ -3,13 +3,13 @@ spring:
     name: kafka-sendgrid
   
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka-external.kafka.svc.cluster.local:9092}
     consumer:
-      group-id: ${KAFKA_CONSUMER_GROUP_ID:kafka-sendgrid-group}
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:form137-sendgrid-consumer}
       auto-offset-reset: ${KAFKA_AUTO_OFFSET_RESET:earliest}
       enable-auto-commit: false
     topic:
-      name: ${KAFKA_TOPIC_NAME:sendgrid-topic}
+      name: ${KAFKA_TOPIC_NAME:form137-email-notifications}
 
 sendgrid:
   api-key: ${SENDGRID_API_KEY:your-sendgrid-api-key}

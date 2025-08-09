@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: kafka-sendgrid-test
+  
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: form137-sendgrid-test-consumer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+    topic:
+      name: test-email-notifications
+
+sendgrid:
+  api-key: test-api-key
+  from-email: test@example.com
+
+logging:
+  level:
+    ph.edu.cspb.kafkasendgrid: DEBUG
+    org.springframework.kafka: WARN
+    org.apache.kafka: WARN
+    org.springframework.test: DEBUG

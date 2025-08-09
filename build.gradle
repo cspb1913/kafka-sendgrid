@@ -91,9 +91,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                '**/KafkaSendgridApplication*',
-                '**/config/**',
-                '**/model/**'
+                '**/KafkaSendgridApplication*'
             ])
         }))
     }
@@ -104,7 +102,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.25
+                minimum = 0.80
             }
         }
     }

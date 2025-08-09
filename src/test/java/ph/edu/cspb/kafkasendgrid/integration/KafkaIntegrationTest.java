@@ -97,7 +97,12 @@ public class KafkaIntegrationTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testObjectMapperFunctionality() throws Exception {
         // Test that ObjectMapper is working correctly
-        EmailMessage emailMessage = new EmailMessage("test@example.com", "Test Subject", "Test Body", "from@example.com");
+        EmailMessage emailMessage = EmailMessage.builder()
+            .to("test@example.com")
+            .subject("Test Subject")
+            .body("Test Body")
+            .from("from@example.com")
+            .build();
         
         // Act
         String json = objectMapper.writeValueAsString(emailMessage);
@@ -113,7 +118,12 @@ public class KafkaIntegrationTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testKafkaConsumerServiceCanProcessMessage() throws Exception {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("test@example.com", "Test Subject", "Test Body", "from@example.com");
+        EmailMessage emailMessage = EmailMessage.builder()
+            .to("test@example.com")
+            .subject("Test Subject")
+            .body("Test Body")
+            .from("from@example.com")
+            .build();
         String jsonMessage = objectMapper.writeValueAsString(emailMessage);
         
         // Mock the email service to not throw exceptions
@@ -149,7 +159,12 @@ public class KafkaIntegrationTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testKafkaConsumerServiceHandlesEmailServiceFailure() throws Exception {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("test@example.com", "Test Subject", "Test Body", "from@example.com");
+        EmailMessage emailMessage = EmailMessage.builder()
+            .to("test@example.com")
+            .subject("Test Subject")
+            .body("Test Body")
+            .from("from@example.com")
+            .build();
         String jsonMessage = objectMapper.writeValueAsString(emailMessage);
         
         // Mock the email service to throw an IOException

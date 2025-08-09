@@ -15,9 +15,11 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import java.io.IOException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service class for consuming messages from Kafka and processing email requests.
+ * Supports both plain text emails and template-based emails.
  */
 @Service
 @RequiredArgsConstructor
@@ -43,14 +45,29 @@ public class KafkaConsumerService {
             // Parse JSON message
             EmailMessage emailMessage = objectMapper.readValue(message, EmailMessage.class);
             
+            // Log message type for debugging
+            if (emailMessage.isTemplateEmail()) {
+                log.debug("Processing template email with template ID: {} and type: {}", 
+                    emailMessage.getTemplateId(), emailMessage.getNotificationType());
+            } else {
+                log.debug("Processing plain text email");
+            }
+            
             // Validate the email message
             Set<ConstraintViolation<EmailMessage>> violations = validator.validate(emailMessage);
+            
+            // Additional validation for content requirements
+            if (!emailMessage.isTemplateEmail() && !emailMessage.hasPlainTextContent()) {
+                log.error("Email must have either template ID or plain text content (subject and body)");
+                acknowledgment.acknowledge();
+                return;
+            }
+            
             if (!violations.isEmpty()) {
-                StringBuilder sb = new StringBuilder("Validation errors: ");
-                for (ConstraintViolation<EmailMessage> violation : violations) {
-                    sb.append(violation.getMessage()).append("; ");
-                }
-                log.error("Invalid email message: {}", sb.toString());
+                String errors = violations.stream()
+                    .map(ConstraintViolation::getMessage)
+                    .collect(Collectors.joining("; "));
+                log.error("Invalid email message: {}", errors);
                 // Acknowledge even invalid messages to avoid reprocessing
                 acknowledgment.acknowledge();
                 return;
@@ -61,11 +78,22 @@ public class KafkaConsumerService {
             
             // Acknowledge successful processing
             acknowledgment.acknowledge();
-            log.info("Successfully processed email message for recipient: {}", emailMessage.getTo());
             
+            if (emailMessage.isTemplateEmail()) {
+                log.info("Successfully processed template email for recipient: {} (template: {}, type: {})", 
+                    emailMessage.getTo(), emailMessage.getTemplateId(), emailMessage.getNotificationType());
+            } else {
+                log.info("Successfully processed plain text email for recipient: {} with subject: {}", 
+                    emailMessage.getTo(), emailMessage.getSubject());
+            }
+            
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid email message format: {}", e.getMessage());
+            // Acknowledge to prevent infinite retries for invalid messages
+            acknowledgment.acknowledge();
         } catch (IOException e) {
             log.error("Failed to parse or send email message: {}", message, e);
-            // Don't acknowledge - let Kafka retry
+            // Don't acknowledge - let Kafka retry for transient errors
         } catch (Exception e) {
             log.error("Unexpected error processing message: {}", message, e);
             // Acknowledge to prevent infinite retries for permanently broken messages

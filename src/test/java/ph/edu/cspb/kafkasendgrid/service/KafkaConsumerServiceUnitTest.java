@@ -48,7 +48,7 @@ public class KafkaConsumerServiceUnitTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         
-        validEmailMessage = new EmailMessage("test@example.com", "Test Subject", "Test Body", "sender@example.com");
+        validEmailMessage = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         validJsonMessage = "{\"to\":\"test@example.com\",\"subject\":\"Test Subject\",\"body\":\"Test Body\",\"from\":\"sender@example.com\"}";
     }
 
@@ -143,7 +143,7 @@ public class KafkaConsumerServiceUnitTest {
     @Test
     public void testConsumeEmailMessageWithNullFromAddress() throws IOException {
         // Arrange
-        EmailMessage messageWithNullFrom = new EmailMessage("test@example.com", "Test Subject", "Test Body", null);
+        EmailMessage messageWithNullFrom = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         String jsonWithNullFrom = "{\"to\":\"test@example.com\",\"subject\":\"Test Subject\",\"body\":\"Test Body\"}";
         
         when(objectMapper.readValue(jsonWithNullFrom, EmailMessage.class)).thenReturn(messageWithNullFrom);

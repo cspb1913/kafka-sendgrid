@@ -27,7 +27,7 @@ public class EmailServiceIntegrationTest extends AbstractTestNGSpringContextTest
 
     @Test
     public void testEmailMessageCreation() {
-        EmailMessage message = new EmailMessage("test@example.com", "Subject", "Body", null);
+        EmailMessage message = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         assertNotNull(message);
         assertNotNull(message.getTo());
         assertNotNull(message.getSubject());

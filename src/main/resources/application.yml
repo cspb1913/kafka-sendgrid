@@ -14,6 +14,17 @@ spring:
 sendgrid:
   api-key: ${SENDGRID_API_KEY:your-sendgrid-api-key}
   from-email: ${SENDGRID_FROM_EMAIL:no-reply@yourdomain.com}
+  from-name: ${SENDGRID_FROM_NAME:Form 137 System}
+  templates:
+    use-templates-by-default: ${SENDGRID_USE_TEMPLATES:true}
+    default-template-id: ${SENDGRID_DEFAULT_TEMPLATE_ID:}
+    ids:
+      submission: ${SENDGRID_TEMPLATE_SUBMISSION:d-xxx-submission-template-id}
+      status_update: ${SENDGRID_TEMPLATE_STATUS_UPDATE:d-xxx-status-update-template-id}
+      approval: ${SENDGRID_TEMPLATE_APPROVAL:d-xxx-approval-template-id}
+      rejection: ${SENDGRID_TEMPLATE_REJECTION:d-xxx-rejection-template-id}
+      reminder: ${SENDGRID_TEMPLATE_REMINDER:d-xxx-reminder-template-id}
+      completion: ${SENDGRID_TEMPLATE_COMPLETION:d-xxx-completion-template-id}
 
 logging:
   level:

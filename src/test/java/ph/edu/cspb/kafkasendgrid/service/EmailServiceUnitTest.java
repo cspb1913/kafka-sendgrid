@@ -41,7 +41,7 @@ public class EmailServiceUnitTest {
     @Test
     public void testSendEmailSuccess() throws IOException {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("recipient@example.com", "Test Subject", "Test Body", "sender@example.com");
+        EmailMessage emailMessage = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         
         Response mockResponse = mock(Response.class);
         when(mockResponse.getStatusCode()).thenReturn(202);
@@ -58,7 +58,7 @@ public class EmailServiceUnitTest {
     @Test
     public void testSendEmailWithDefaultFromAddress() throws IOException {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("recipient@example.com", "Test Subject", "Test Body", null);
+        EmailMessage emailMessage = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         
         Response mockResponse = mock(Response.class);
         when(mockResponse.getStatusCode()).thenReturn(202);
@@ -75,7 +75,7 @@ public class EmailServiceUnitTest {
     @Test(expectedExceptions = RuntimeException.class)
     public void testSendEmailFailureWith400StatusCode() throws IOException {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("recipient@example.com", "Test Subject", "Test Body", "sender@example.com");
+        EmailMessage emailMessage = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         
         Response mockResponse = mock(Response.class);
         when(mockResponse.getStatusCode()).thenReturn(400);
@@ -91,7 +91,7 @@ public class EmailServiceUnitTest {
     @Test(expectedExceptions = IOException.class)
     public void testSendEmailIOException() throws IOException {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("recipient@example.com", "Test Subject", "Test Body", "sender@example.com");
+        EmailMessage emailMessage = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         when(sendGrid.api(any(Request.class))).thenThrow(new IOException("Network error"));
 
         // Act
@@ -103,7 +103,7 @@ public class EmailServiceUnitTest {
     @Test
     public void testSendEmailRequestStructure() throws IOException {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("test@example.com", "Subject", "Body", "from@example.com");
+        EmailMessage emailMessage = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         
         Response mockResponse = mock(Response.class);
         when(mockResponse.getStatusCode()).thenReturn(202);
@@ -126,7 +126,7 @@ public class EmailServiceUnitTest {
     @Test
     public void testSendEmailWithEmptyFromAddress() throws IOException {
         // Arrange
-        EmailMessage emailMessage = new EmailMessage("recipient@example.com", "Test Subject", "Test Body", "");
+        EmailMessage emailMessage = EmailMessage.builder().to("test@example.com").subject("Test Subject").body("Test Body").build();
         
         Response mockResponse = mock(Response.class);
         when(mockResponse.getStatusCode()).thenReturn(202);
